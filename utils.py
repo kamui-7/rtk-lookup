@@ -4,7 +4,6 @@ from furigana.furigana import print_plaintext
 import colorama
 from colorama import Fore
 
-
 ## Gets all the raw data for processing
 
 def get_keyword_by_kanji(kanji):
@@ -18,7 +17,6 @@ def get_keyword_by_kanji(kanji):
     except:
         return ''
 
-
 def get_kanji_by_keywords(keyword):
     res = requests.get("https://jisho.org/search/%23kanji {}".format(keyword))
     soup = bs4.BeautifulSoup(res.text, features="lxml")
@@ -26,24 +24,19 @@ def get_kanji_by_keywords(keyword):
     allKanji = [i.get_text() for i in kanji]
     return allKanji
 
-
 def loadFrames():
-    with open("Kanji Data.tsv", encoding="utf-8") as framef:
+    with open("kanji_data.tsv", encoding="utf-8") as framef:
         reader = csv.reader(framef, delimiter="\t")
         return dict([x[:2] for x in reader])
-
 
 kfmap = loadFrames()
 fkmap = {v: k for k, v in kfmap.items()}
 
-
 def kanji_to_frame(kanji):
     return kfmap[kanji]
 
-
 def frame_to_kanji(frame):
     return fkmap[frame]
-
 
 def lookup_eng_def(word):
     res = requests.get(f"https://jisho.org/search/{word}")
@@ -57,10 +50,8 @@ def lookup_eng_def(word):
         allDefs.append(i.get_text())
     return allDefs
 
-
 def gen_furigana(word, mode):
     print_plaintext(word, mode)
-
 
 def kanjify(word):
     res = requests.get(f"https://jisho.org/search/{word}")
@@ -72,15 +63,12 @@ def kanjify(word):
     possibleKanjified = [x.get_text() for x in kanjified]
     return possibleKanjified
 
-
 def openDef(link):
     driver = webdriver.Firefox()
     driver.get(link)
 
-
 def copy(output):
     pyperclip.copy(output)
-
 
 def get_story(kanji):
     response = requests.get(f"https://hochanh.github.io/rtk/{kanji}/index.html")
@@ -88,10 +76,8 @@ def get_story(kanji):
     paragraphs = soup.select("p")[0].get_text()
     return paragraphs
 
-
 colors = {"Normal": Fore.WHITE, "FireFox": Fore.GREEN, "Furigana": Fore.YELLOW, "Kanjify": Fore.LIGHTRED_EX,
           "Dictionary": Fore.CYAN, "Info": Fore.LIGHTBLUE_EX}
-
 
 def printOutput(output, mode):
     colorama.init()

@@ -54,5 +54,3 @@ Keywords:  behind, back, later,
 Frame:  1379
 Story:  Line . . . cocoon . . . walking legs.
 ```
-
-

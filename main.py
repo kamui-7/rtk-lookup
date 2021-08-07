@@ -1,12 +1,11 @@
-from colorama import Fore
 import cmd, sys
 import datetime
-
-from utils import *
 import string
-
+from colorama import Fore
+from utils import *
 
 class SearchResult():
+
     def __init__(self, search_string):
         self.search = search_string
         '''
@@ -39,7 +38,6 @@ class SearchResult():
                 full += arg
 
         return full
-
 
 class MainCli(cmd.Cmd):
     """The command line interface (Cli). """
@@ -138,11 +136,13 @@ class MainCli(cmd.Cmd):
     def searchMain(self, line):
         searchArgs = line.split(' ')
         searchObj = SearchResult(searchArgs)
+
         try:
             endres = searchObj.search_basic()
         except:
             print("No results...")
             return
+
         if self.mode == "Normal":
             printOutput(endres, self.mode)
             if self.copyon:
@@ -197,7 +197,6 @@ class MainCli(cmd.Cmd):
                         break
 
                 copy(dictEntry[entrynum].strip())
-
 
 print(Fore.RED + "Loading rtk data...")
 loadFrames()
